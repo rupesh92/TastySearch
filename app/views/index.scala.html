@@ -6,10 +6,15 @@
     <!--<ul id="persons"></ul>-->
 
 
+    <form method="POST" action="@routes.ReviewController.updateData()">
+
+        <button>Update Data</button>
+    </form>
+
     <form method="POST" action="@routes.ReviewController.getTopReviews()">
         Query tokens: <input type="text" name="tokens" placeholder="Space seperated tokens"/>
 
-        K = <input type="text" name="numberOfResuls"/>
+        K = <input type="text" name="numberOfResults"/>
 
         <button>Query</button>
     </form>

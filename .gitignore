@@ -1,9 +1,9 @@
 logs
 target
+data
 /.idea
 /.idea_modules
 /.classpath
 /.project
 /.settings
-data
 /RUNNING_PID
