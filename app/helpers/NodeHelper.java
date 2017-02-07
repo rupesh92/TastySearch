@@ -2,7 +2,7 @@ package helpers;
 
 import models.Review;
 import helpers.ReviewHelper;
-import services.Node;
+import models.Trie;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -14,7 +14,7 @@ import java.util.*;
  */
 public class NodeHelper {
 
-    public static void readFile(String filePath, Node node) throws IOException {
+    public static void readFile(String filePath, Trie trie) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(filePath));
 
         try {
@@ -29,21 +29,17 @@ public class NodeHelper {
                 long timeStamp = Long.parseLong(br.readLine().split(": ")[1]);
                 String summary = br.readLine().split(": ")[1];
                 String text = br.readLine().split(": ")[1];
-//                Logger.info("Product Id is" + productID);
-//                System.out.println("Product ID is " + productID);
                 Review review = new Review(productID, userID, profileName, summary, text, helpfullness, score, timeStamp);
 
                 String words[] = summary.split(" ");
 
                 for(String word: words) {
-                    node.addWord(word, review);
-//                    if(word.length() > 0 && word.charAt(0) == 'B')System.out.println(node.children.get('B').reviews.size());
+                    trie.insert(word, review);
                 }
-//                System.out.println("pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp");
 
                 words = text.split(" ");
                 for(String word: words) {
-                    node.addWord(word, review);
+                    trie.insert(word, review);
                 }
                 br.readLine();
             }
@@ -53,15 +49,13 @@ public class NodeHelper {
     }
 
 
-    public static List<ReviewHelper> topReviews(Node node, String []query, int k) {
+    public static List<ReviewHelper> topReviews( Trie trie, String []query, int k) {
         HashMap<Review, HashSet<String>> map = new HashMap<>();
         int size = query.length;
-//        System.out.print("testing" + node.getChildren().get('g').children.get('o').reviews.size());
         Queue<ReviewHelper> queue = new PriorityQueue<>();
         for(int i = 0 ; i < size; i++) {
             String token = query[i];
-            List<Review> reviews = node.getDocuments(token);
-//            System.out.println("For query" + query.length + "review size is" + reviews.size());
+            List<Review> reviews = trie.search(token);
             for(Review review: reviews) {
                 if(!map.containsKey(review)) {
                     map.put(review, new HashSet<>());
@@ -73,8 +67,6 @@ public class NodeHelper {
 
         for (Map.Entry<Review, HashSet<String>> entry : map.entrySet()) {
             queue.add(new ReviewHelper(entry.getKey(), entry.getValue().size()));
-
-            System.out.println("Key = " + entry.getKey().product.getProductID() + ", Value = " + entry.getValue().size());
         }
 
         List<ReviewHelper> list = new ArrayList<>();

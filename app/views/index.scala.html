@@ -2,15 +2,17 @@
 
 @main("Welcome to Play") {
     <script type='text/javascript' src='@routes.Assets.at("javascripts/index.js")'></script>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!--<ul id="persons"></ul>-->
 
 
     <form method="POST" action="@routes.ReviewController.updateData()">
-
-        <button>Update Data</button>
+        Make sure you press this button to load the data before doing any other operation
+        <button class="btn btn-primary">Update Data</button>
     </form>
-
+    </br>
+    </br>
     <form method="POST" action="@routes.ReviewController.getTopReviews()">
         Query tokens: <input type="text" name="tokens" placeholder="Space seperated tokens"/>
 
