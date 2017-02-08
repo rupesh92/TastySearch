@@ -7,7 +7,7 @@ public class Product {
 
     private String productID;
 
-    public Product(String productID) {
+    public Product(final String productID) {
         this.productID = productID;
     }
 
@@ -15,7 +15,7 @@ public class Product {
         return productID;
     }
 
-    public void setProductID(String productID) {
+    public void setProductID(final String productID) {
         this.productID = productID;
     }
 

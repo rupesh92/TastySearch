@@ -6,8 +6,6 @@ import models.Review;
  */
 public class ReviewHelper implements Comparable<ReviewHelper>{
     Review review;
-
-
     int score;
 
     public Review getReview() {

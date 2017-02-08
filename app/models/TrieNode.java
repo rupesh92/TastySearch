@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -8,11 +9,11 @@ import java.util.List;
  */
 public class TrieNode {
     TrieNode[] children;
-    List<Review> reviews;
+    HashSet<Review> reviews;
 
     // Initialize your data structure here.
     public TrieNode() {
         children = new TrieNode[256];
-        reviews = new ArrayList<>();
+        reviews = new HashSet<>();
     }
 }

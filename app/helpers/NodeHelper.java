@@ -19,7 +19,7 @@ public class NodeHelper {
 
         try {
             StringBuilder sb = new StringBuilder();
-            for(int i =  0 ; i < 1; i++) {
+            for(int i =  0 ; i < 5000; i++) {
                 String productID = br.readLine().split(": ")[1];
                 String userID = br.readLine().split(": ")[1];
                 String profileName = br.readLine().split(": ")[1];
@@ -52,7 +52,7 @@ public class NodeHelper {
     public static List<ReviewHelper> topReviews( Trie trie, String []query, int k) {
         HashMap<Review, HashSet<String>> map = new HashMap<>();
         int size = query.length;
-        Queue<ReviewHelper> queue = new PriorityQueue<>();
+        Queue<ReviewHelper> queue = new PriorityQueue<>(k, Collections.reverseOrder());
         for(int i = 0 ; i < size; i++) {
             String token = query[i];
             List<Review> reviews = trie.search(token);
@@ -60,7 +60,6 @@ public class NodeHelper {
                 if(!map.containsKey(review)) {
                     map.put(review, new HashSet<>());
                 }
-                System.out.println(review.product.getProductID() + " " + token);
                 map.get(review).add(token);
             }
         }
@@ -73,6 +72,7 @@ public class NodeHelper {
         int count = 0;
         while(!queue.isEmpty() && count < k) {
             list.add(queue.poll());
+            count++;
         }
         return list;
     }

@@ -4,6 +4,7 @@
 
 # Home page
 GET     /                           controllers.ReviewController.index()
+GET     /showReviews                           controllers.ReviewController.showReviews()
 POST    /getTopReviews                     controllers.ReviewController.getTopReviews()
 POST    /updateData                     controllers.ReviewController.updateData()
 
