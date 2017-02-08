@@ -53,7 +53,6 @@ public class Review{
     }
 
     public boolean equals(Object obj){
-        System.out.println("In equals");
         if (obj instanceof Review) {
             Review review = (Review) obj;
             if(this.userID.equals(review.userID) && this.product.getProductID().equals(review.product.getProductID())
