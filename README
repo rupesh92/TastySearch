@@ -8,42 +8,71 @@ There are several demonstration files available in this template.
 Controllers
 ===========
 
-- HomeController.java:
+- ReviewController.java:
 
-  Shows how to handle simple HTTP requests.
+  Shows how to handle simple HTTP requests. has various action each of which server different HHTP requests
 
-- AsyncController.java:
-
-  Shows how to do asynchronous programming when handling a request.
-
-- CountController.java:
-
-  Shows how to inject a component into a controller and use the component when
-  handling requests.
-
-Components
+Models
 ==========
 
-- Module.java:
+- Product.java:
 
-  Shows how to use Guice to bind all the components needed by your application.
+  Indicates the product on which the review is made by a user
 
-- Counter.java:
+- Review.java:
 
-  An example of a component that contains state, in this case a simple counter.
+  This indicates the reviews made by user on a product. This has various properties like product, reviewText, time, etc
 
-- ApplicationTimer.java:
+- Trie.java:
 
-  An example of a component that starts when the application starts and stops
-  when the application stops.
+  A data structure in which all the words of the review made are stored
 
-Filters
+- TrieNode.java
+
+  Nodes present in Trie, wherein each node represents a single character, and contains a list of reviews pertaining to
+  the reviews ending at this character
+
+Helpers
 =======
 
-- Filters.java:
+- FileReadHelper.java:
 
-  Creates the list of HTTP filters used by your application.
+  This class helps in reading the txt file containing all the review data and store them in memory
 
-- ExampleFilter.java
+- NodeHelper.java
 
-  A simple filter that adds a header to every response.
+  This class helps in understanding the user query and respond back with the desired response he requested
+
+- ReviewHelper.java
+
+  This class helps in rating a review as per the user input queries by computing the number of words this review
+  actually contains
+
+  ==========================================================================================================
+                                           How to set up the project
+  ==========================================================================================================
+
+  1. Go to https://playframework.com/download and download play with activator.
+
+  2. For MacOS/Unix users, add activator installation dorectory to your system PATH
+  Add to your login profile. Usually, this is $HOME/.profile:
+
+  export PATH=/path/to/activator-x.x.x/bin:$PATH
+
+  3. Once this is done, clone this project and brwse to this from terminal/cmd.
+  4. type "activator compile" to compile the project and use "activator run" to run the project.
+  This might take some time as it will download some of the necessary jars.
+  5. Once this is done, you should see some thing like this in your console.
+
+  --- (Running the application, auto-reloading is enabled) ---
+
+  [info] p.c.s.NettyServer - Listening for HTTP on /0:0:0:0:0:0:0:0:9000
+
+  (Server started, use Ctrl+D to stop and go back to the console...)
+
+  6. Just go to localhost:9000 and access the app.
+
+  7. Make sure you click the update data button to load the data from the txt file into the application runtime memory.
+
+  8. Also, please add the finefoods.txt file to the data folder of the project. You will have to manually add it as it
+  not included in this git project.
