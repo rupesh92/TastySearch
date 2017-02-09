@@ -11,7 +11,9 @@ public class TrieNode {
     TrieNode[] children;
     HashSet<Review> reviews;
 
-    // Initialize your data structure here.
+    /**
+     * Constructor function to instantiate the TrieNode object
+     */
     public TrieNode() {
         children = new TrieNode[256];
         reviews = new HashSet<>();

@@ -15,9 +15,8 @@ public class Trie {
 
     /**
      * Inserts a word into the trie.
-     *
-     * @param word
-     * @param review
+     * @param word which is to be inserted
+     * @param review corresponding to the word to be inserted
      */
     public void insert(String word, Review review) {
         TrieNode rootNode = root;
@@ -36,10 +35,10 @@ public class Trie {
     }
 
     /**
-     * Searches
+     * Searches for a word in the trie and responses with all the reviews containing that word
      *
-     * @param word
-     * @return list of
+     * @param word to be searched
+     * @return list of reviews containing that word
      */
     public List<Review> search(String word) {
         TrieNode rootNode = root;

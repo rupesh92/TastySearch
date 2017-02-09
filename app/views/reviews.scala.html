@@ -1,19 +1,12 @@
 @(reviews: List[helpers.ReviewHelper])
 
-<!--@for(review <- reviews){-->
-    <!--Product ID is @review.getReview().getProduct.getProductID()-->
-    <!--UserID is @review.getReview().getUserID()-->
-    <!--Review Scope is @review.getReview().getScore()-->
-    <!--Number of occurrences are: @review.getScore()<br>-->
-<!--}-->
-
 <table class="table table-stripped">
 
     <thead>
-        <tr>Product ID</tr>
-        <tr>User ID</tr>
-        <tr>Score</tr>
-        <tr>Count</tr>
+        <th>Product ID</th>
+        <th>User ID</th>
+        <th>Review Score</th>
+        <th>Score</th>
     </thead>
     <tbody>
         @for(review <- reviews) {

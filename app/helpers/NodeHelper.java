@@ -1,11 +1,9 @@
 package helpers;
 
 import models.Review;
-import helpers.ReviewHelper;
 import models.Trie;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
@@ -13,46 +11,84 @@ import java.util.*;
  * Created by rupesh on 06/02/17.
  */
 public class NodeHelper {
+    private static final int NUMBER_OF_REVIEWS = 5000;
 
-    public static void readFile(String filePath, Trie trie) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(filePath));
+    /**
+     * this function reads review from the file and stores it in the trie.
+     * @param trie in which the review is to be stored
+     * @throws IOException
+     */
+    public static void updateData(Trie trie) throws IOException {
+        BufferedReader br = FileReadHelper.openFile();
 
         try {
-            StringBuilder sb = new StringBuilder();
-            for(int i =  0 ; i < 5000; i++) {
-                String productID = br.readLine().split(": ")[1];
-                String userID = br.readLine().split(": ")[1];
-                String profileName = br.readLine().split(": ")[1];
-                int helpfullness = 1;//Integer.parseInt(br.readLine().split(":")[1].split("/")[0]);
-                br.readLine();
-                double score = Double.parseDouble(br.readLine().split(": ")[1]);
-                long timeStamp = Long.parseLong(br.readLine().split(": ")[1]);
-                String summary = br.readLine().split(": ")[1];
-                String text = br.readLine().split(": ")[1];
-                Review review = new Review(productID, userID, profileName, summary, text, helpfullness, score, timeStamp);
+            for(int i =  0 ; i < NUMBER_OF_REVIEWS; i++) {
 
-                String words[] = summary.split(" ");
+                Review review = FileReadHelper.readReview(br);
 
-                for(String word: words) {
-                    trie.insert(word, review);
-                }
+                String words[] = review.getSummary().split(" ");
+                insertWords(trie, words, review);
 
-                words = text.split(" ");
-                for(String word: words) {
-                    trie.insert(word, review);
-                }
-                br.readLine();
+                words = review.getText().split(" ");
+                insertWords(trie, words, review);
             }
         } finally {
             br.close();
         }
     }
 
+    /**
+     * This is a helper function for updateData which stores data in the trie
+     * @param trie in which the words are to be stored
+     * @param words array of string to be stored in the trie
+     * @param review review which contains all the mentioned words
+     */
+    public static void insertWords(Trie trie, String []words, Review review) {
+        for(String word: words) {
+            trie.insert(word, review);
+        }
+    }
 
-    public static List<ReviewHelper> topReviews( Trie trie, String []query, int k) {
+
+    /**
+     * Tis function helps in getting the top desired number of reviews which satisfy the maximum occurrence condition
+     * @param trie from which the reviews are to be fetched
+     * @param query Array of string results for which are desired
+     * @param k number of results demanded by the user
+     * @return list of reviewHelpers objects in the order of their match
+     */
+    public static List<ReviewHelper> getTopReviews( Trie trie, String []query, int k) {
+        HashMap<Review, HashSet<String>> map = populateMap(query, trie);
+        Queue<ReviewHelper> queue = new PriorityQueue<>(k, Collections.reverseOrder());
+        int numOfWords = query.length;
+
+        for (Map.Entry<Review, HashSet<String>> entry : map.entrySet()) {
+
+            double score = ((double)entry.getValue().size())/numOfWords;
+            score = Math.round(score * 100);
+            score = score/100;
+            queue.add(new ReviewHelper(entry.getKey(), score));
+        }
+
+        List<ReviewHelper> list = new ArrayList<>();
+
+        int count = 0;
+        while(!queue.isEmpty() && count < k) {
+            list.add(queue.poll());
+            count++;
+        }
+        return list;
+    }
+
+    /**
+     * This is used to populate the map containing review mapped to a pool of string contained in it and requested by the user
+     * @param query Array of string occurrence of which in the reviews is requested by the user
+     * @param trie in which the reviews are to be searched
+     * @return
+     */
+    private static HashMap<Review, HashSet<String>> populateMap(String query[], Trie trie) {
         HashMap<Review, HashSet<String>> map = new HashMap<>();
         int size = query.length;
-        Queue<ReviewHelper> queue = new PriorityQueue<>(k, Collections.reverseOrder());
         for(int i = 0 ; i < size; i++) {
             String token = query[i];
             List<Review> reviews = trie.search(token);
@@ -63,18 +99,7 @@ public class NodeHelper {
                 map.get(review).add(token);
             }
         }
-
-        for (Map.Entry<Review, HashSet<String>> entry : map.entrySet()) {
-            queue.add(new ReviewHelper(entry.getKey(), entry.getValue().size()));
-        }
-
-        List<ReviewHelper> list = new ArrayList<>();
-        int count = 0;
-        while(!queue.isEmpty() && count < k) {
-            list.add(queue.poll());
-            count++;
-        }
-        return list;
+        return map;
     }
 
 }

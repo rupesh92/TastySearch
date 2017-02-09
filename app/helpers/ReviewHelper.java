@@ -6,26 +6,39 @@ import models.Review;
  */
 public class ReviewHelper implements Comparable<ReviewHelper>{
     Review review;
-    int score;
+    double score;
 
+    /**
+     * Getter function to get the review
+     * @return returs the review object of the object
+     */
     public Review getReview() {
         return review;
     }
 
-    public int getScore() {
+    /**
+     * Getter function to get the score of the review
+     * @return the score
+     */
+    public double getScore() {
         return score;
     }
 
-    public void setReview(Review review) {
-        this.review = review;
-    }
-
-
-    public ReviewHelper(Review review, int score) {
+    /**
+     * Constructor to instantiate the reviewHelper object
+     * @param review
+     * @param score
+     */
+    public ReviewHelper(Review review, double score) {
         this.review = review;
         this.score = score;
     }
 
+    /**
+     * This is required to compare two reviewHelper objects
+     * @param o
+     * @return
+     */
     @Override
     public int compareTo(ReviewHelper o) {
         if(this.score == o.score) {
