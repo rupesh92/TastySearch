@@ -74,5 +74,4 @@ Helpers
 
   7. Make sure you click the update data button to load the data from the txt file into the application runtime memory.
 
-  8. Also, please add the finefoods.txt file to the data folder of the project. You will have to manually add it as it
-  not included in this git project.
+  8. Also, please add the finefoods.txt file to the data folder of the project. You will have to manually add it as it is not included in this git project.

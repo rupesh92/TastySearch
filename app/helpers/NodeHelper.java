@@ -11,7 +11,7 @@ import java.util.*;
  * Created by rupesh on 06/02/17.
  */
 public class NodeHelper {
-    private static final int NUMBER_OF_REVIEWS = 5000;
+    private static final int NUMBER_OF_REVIEWS = 50000;
 
     /**
      * this function reads review from the file and stores it in the trie.
