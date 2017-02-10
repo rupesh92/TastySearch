@@ -6,7 +6,7 @@
 GET     /                           controllers.ReviewController.index()
 GET     /showReviews                           controllers.ReviewController.showReviews()
 GET     /error                           controllers.ReviewController.caughtError()
-POST    /getTopReviews                     controllers.ReviewController.getTopReviews()
+GET    /getTopReviews                     controllers.ReviewController.getTopReviews()
 POST    /updateData                     controllers.ReviewController.updateData()
 
 # Map static resources from the /public folder to the /assets URL path
